@@ -1,0 +1,29 @@
+{
+  "name": "hain-plugin-money",
+  "version": "0.0.1",
+  "description": "Currency conversion in Hain !",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/metrakit/hain-plugin-money.git"
+  },
+  "author": "Jordane JOUFFROY",
+  "license": "MIT",
+  "keywords": [
+    "hain0"
+  ],
+  "bugs": {
+    "url": "https://github.com/metrakit/hain-plugin-money/issues"
+  },
+  "homepage": "https://github.com/metrakit/hain-plugin-money",
+  "dependencies": {
+    "lodash": "^4.6.1",
+    "request": "^2.69.0"
+  },
+  "hain": {
+    "prefix": "/money",
+    "usage": "/money 1 EUR",
+    "icon": "#fa fa-money",
+    "redirect": "/money "
+  }
+}
