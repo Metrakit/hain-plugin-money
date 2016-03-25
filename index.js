@@ -1,16 +1,14 @@
-/*jshint esversion: 6 */
-/*jshint globalstrict: true */
 'use strict';
 
-const _       = require('lodash');
-const request = require('request');
+const _   = require('lodash');
+const got = require('got');
 
 var query_url = "http://free.currencyconverterapi.com/api/v3/convert?q=";
 
+var currencies = require('./currencies.json');
+
 module.exports = (pluginContext) => {
     const shell = pluginContext.shell;
-
-    var currencies = ['EUR', 'USD', 'PHP'];
 
     const logger = pluginContext.logger;
 
@@ -41,31 +39,30 @@ module.exports = (pluginContext) => {
 
         if (queries.length == 3) {
           var url = buildUrl(queries[2]);
-          request({
-              url: url,
-              json: true
-          }, function (error, response, body) {
 
-            if (!error && response.statusCode === 200 && body.results) {
-                var results = body.results;
-                _.forEach(results, (value) => {
-                  value.cash = queries[1];
-                  res.add({
-                    id: value,
-                    payload: 'open',
-                    title: queries[1] + ' ' + value.fr + ' = ' + (queries[1] * value.val) + ' ' + value.to
+          got(url)
+      .then(response => {
+        var body = JSON.parse(response.body);
+          if (body.results) {
+                  var results = body.results;
+                  _.forEach(results, (value) => {
+                    value.cash = queries[1];
+                    res.add({
+                      id: value,
+                      payload: 'open',
+                      title: queries[1] + ' ' + value.fr + ' = ' + (queries[1] * value.val) + ' ' + value.to
+                    });
                   });
-                });
-            }
+              }
+      });
+        }
 
-            if (queries.length > 3) {
-              return res.add({
-                id: 'error',
-                payload: 'open',
-                title: 'Too many arguments !',
-                desc: 'Example : /money 1 EUR or /money 10 USD'
-              });
-            }
+        if (queries.length > 3) {
+          return res.add({
+            id: 'error',
+            payload: 'open',
+            title: 'Too many arguments !',
+            desc: 'Example : /money 1 EUR or /money 10 USD'
           });
         }
     }
