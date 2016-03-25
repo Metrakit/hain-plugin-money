@@ -18,7 +18,7 @@
   "homepage": "https://github.com/metrakit/hain-plugin-money",
   "dependencies": {
     "lodash": "^4.6.1",
-    "request": "^2.69.0"
+    "got": "^6.2.0"
   },
   "hain": {
     "prefix": "/money",
