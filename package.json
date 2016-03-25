@@ -1,6 +1,6 @@
 {
   "name": "hain-plugin-money",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Currency conversion in Hain !",
   "main": "index.js",
   "repository": {
